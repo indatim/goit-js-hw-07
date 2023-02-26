@@ -30,14 +30,21 @@ function onImageClick(e) {
   const instance = basicLightbox.create(`
     <img src="${e.target.dataset.source}" width="800" height="600">
 `)
-  instance.show()
-
-  picContainer.addEventListener('keydown', e => {
+  instance.show(() => window.addEventListener('keydown', onEscKeyPress));
+  
+  function onEscKeyPress (e) {
     const ESC_KEY_CODE = 'Escape';
     if (e.code === ESC_KEY_CODE) {
-      instance.close()
+      instance.close(() => window.removeEventListener('keydown', onEscKeyPress))
     }
-	})
+	}
+
+  // picContainer.addEventListener('keydown', e => {
+  //   const ESC_KEY_CODE = 'Escape';
+  //   if (e.code === ESC_KEY_CODE) {
+  //     instance.close()
+  //   }
+	// })
 }
 
 console.log(createPicMaker);
